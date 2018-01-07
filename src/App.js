@@ -1,21 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Columns, Column, Section, Title, Label, Control, Select, Notification } from 'bloomer';
+import 'bulma/css/bulma.css';
+import { Container } from 'bloomer/lib/layout/Container';
+import { Subtitle } from 'bloomer/lib/elements/Subtitle';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+// @flow
+export default class App extends Component {
+	render() {
+		return (
+			<Section>
+			<Columns>
+			<Column isSize="3/4">
+				<Container>
+					<Title>
+						Heanthor's Simcraft Runner
+					</Title>
+					<Subtitle>
+						Run sims on an <strong>entire guild</strong>, or a <strong>single player</strong>.<br/>
+						Get meaningful results for <strong>all Legion raids</strong>.
+					</Subtitle>
+				</Container>
+				</Column>
+				<Column>
+					<Notification isColor="primary">
+					<Label>Select Raid</Label>
+					<Control>
+						<Select>
+							<option value="nightmare">Emerald Nightmare</option>
+							<option value="nighthold">Nighthold</option>
+							<option value="tos">Tomb of Sargeras</option>
+							<option value="antorus" selected={true}>Antorus</option>
+						</Select>
+					</Control>
+					</Notification>
+				</Column>
+			</Columns>
+		  </Section>
+		);
+	}
 }
-
-export default App;
