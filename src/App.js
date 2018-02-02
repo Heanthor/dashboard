@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Columns, Column, Section, Title, Label, Control, Select, Notification, Field, Button } from 'bloomer';
+import { Columns, Column, Section, Title, Label, Control, Select, Notification, Field, Button, Box } from 'bloomer';
 import 'bulma/css/bulma.css';
 import { Container } from 'bloomer/lib/layout/Container';
 import { Subtitle } from 'bloomer/lib/elements/Subtitle';
@@ -12,9 +12,20 @@ export default class App extends Component {
 		super(props);
 
 		this.state = {
-			raidSelectorColor: "primary",
-			simType: null // player or guild
+			raid: "antorus",
+			simType: null, // player or guild
+
+			region: "US",
+			difficulty: "heroic",
+			weeksToScan: 3,
+			
+			playerName: "",
+			playerRealm: "",
+			guildName: "",
+			guildRealm: ""
 		};
+
+		this.handleInput = this.handleInput.bind(this);
 	}
 
 	onRaidSwitch(raid) {
@@ -27,11 +38,59 @@ export default class App extends Component {
 		}
 	}
 
-	renderGuildSimForm() {
-		return this.state.simType == "guild"
+	handleInput(event) {
+		this.setState({
+			[event.target.name]: event.target.value
+		});
 	}
 
 	// RENDER FUNCTIONS
+	renderGuildSimForm() {
+		return this.state.simType === "guild" ? (
+			<Box>
+				<Label>Guild</Label>
+				<Field>
+					<Control>
+						<Input type="text" name="guildName" value={this.state.guildName} onChange={this.handleInput} />
+					</Control>
+				</Field>
+
+				<Label>Realm</Label>
+				<Field isGrouped="right">
+					<Control isExpanded={true}>
+						<Input type="text" name="guildRealm" value={this.state.guildRealm} onChange={this.handleInput} />
+					</Control>
+					<Control>
+						<Button isColor="info">Go</Button>
+					</Control>
+				</Field>
+			</Box>
+		) : null;
+	}
+
+	renderPlayerSimForm() {
+		return this.state.simType === "player" ? (
+			<Box>
+				<Label>Name</Label>
+				<Field>
+					<Control>
+						<Input type="text" name="playerName" value={this.state.playerName} onChange={this.handleInput} />
+					</Control>
+				</Field>
+
+				<Label>Realm</Label>
+				<Field isGrouped="right">
+					<Control isExpanded={true}>
+						<Input type="text" name="playerRealm" value={this.state.playerRealm} onChange={this.handleInput} />
+					</Control>
+					<Control>
+						<Button isColor="info">Go</Button>
+					</Control>
+				</Field>
+			</Box>
+		) : null;
+	}
+
 	render() {
 		return (
 			<Section>
@@ -47,31 +106,35 @@ export default class App extends Component {
 
 
 				<Subtitle isSize={5}>Select a raid and sim type...</Subtitle>
-				<Field hasAddons="right" isPulled="left">
-				<Control>
-					<Select>
-						<option value="nightmare">Emerald Nightmare</option>
-						<option value="nighthold">Nighthold</option>
-						<option value="tos">Tomb of Sargeras</option>
-						<option value="antorus" selected={true}>Antorus</option>
-					</Select>
-				</Control>
-				<Control>
-					<Button isColor="primary">Guild Sim</Button>
-				</Control>
-				<Control>
-					<Button isColor="primary">Player Sim</Button>
-				</Control>
+				<Field isGrouped={true}>
+					<Control>
+						<Select name="raid" defaultValue="antorus" onChange={this.handleInput}>
+							<option value="nightmare">Emerald Nightmare</option>
+							<option value="nighthold">Nighthold</option>
+							<option value="tos">Tomb of Sargeras</option>
+							<option value="antorus">Antorus</option>
+						</Select>
+					</Control>
+					<Control>
+						<Button isColor="primary" onClick={() => this.setState({ simType: "guild" })}>Guild Sim</Button>
+					</Control>
+					<Control>
+						<Button isColor="primary" onClick={() => this.setState({ simType: "player" })}>Player Sim</Button>
+					</Control>
 				</Field>
+
+				{this.renderGuildSimForm()}
+				{this.renderPlayerSimForm()}
+
 				</Column>
 
 				<Column>
-					<Notification isColor={this.state.raidSelectorColor}>
+					<Notification isColor="primary"> {/* color change here */}
 					<Field>
 						<Label>Region</Label>
 						<Control>
-							<Select>
-								<option value="US" selected>US</option>
+							<Select name="region" value={this.state.region} onChange={this.handleInput}>
+								<option value="US">US</option>
 								<option value="EU">EU</option>
 								<option value="CN">CN</option>
 								<option value="TW">TW</option>
@@ -83,10 +146,10 @@ export default class App extends Component {
 					<Field>
 						<Label>Difficulty</Label>
 						<Control>
-							<Select>
+							<Select name="difficulty" value={this.state.difficulty} onChange={this.handleInput}>
 							<option value="lfr">LFR</option>
 							<option value="normal">Normal</option>
-							<option value="heroic" selected>Heroic</option>
+							<option value="heroic">Heroic</option>
 							<option value="mythic">Mythic</option>
 							</Select>
 						</Control>
@@ -95,7 +158,7 @@ export default class App extends Component {
 					<Field>
 						<Control>
 							<Label>Weeks to Scan</Label>
-							<Input type="number" value="3" />
+							<Input type="number" name="weeksToScan" value={this.state.weeksToScan} onChange={this.handleInput} />
 						</Control>
 					</Field>
 					
