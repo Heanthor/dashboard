@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Columns, Column, Section, Title, Label, Control, Select, Notification, Field, Button, Box } from 'bloomer';
 import 'bulma/css/bulma.css';
+import './mystyles.css';
 import { Container } from 'bloomer/lib/layout/Container';
 import { Subtitle } from 'bloomer/lib/elements/Subtitle';
 import { Input } from 'bloomer/lib/elements/Form/Input';
@@ -22,10 +23,14 @@ export default class App extends Component {
 			playerName: "",
 			playerRealm: "",
 			guildName: "",
-			guildRealm: ""
+			guildRealm: "",
+
+			animateArrow: ""
 		};
 
 		this.handleInput = this.handleInput.bind(this);
+		this.mouseOverGoButton = this.mouseOverGoButton.bind(this);
+		this.mouseLeaveGoButton = this.mouseLeaveGoButton.bind(this);
 	}
 
 	onRaidSwitch(raid) {
@@ -42,6 +47,14 @@ export default class App extends Component {
 		this.setState({
 			[event.target.name]: event.target.value
 		});
+	}
+
+	mouseOverGoButton() {
+		this.setState({ animateArrow: "animate" });
+	}
+
+	mouseLeaveGoButton() {
+		this.setState({ animateArrow: "animate-rev" });
 	}
 
 	// RENDER FUNCTIONS
@@ -61,7 +74,12 @@ export default class App extends Component {
 						<Input type="text" name="guildRealm" value={this.state.guildRealm} onChange={this.handleInput} />
 					</Control>
 					<Control>
-						<Button isColor="info">Go</Button>
+						<Button 
+							isColor="info" 
+							className={this.state.animateArrow} 
+							onMouseEnter={this.mouseOverGoButton}
+							onMouseLeave={this.mouseLeaveGoButton}>
+						Go&nbsp;<i className="fas fa-angle-double-right"></i></Button>
 					</Control>
 				</Field>
 			</Box>
@@ -84,7 +102,12 @@ export default class App extends Component {
 						<Input type="text" name="playerRealm" value={this.state.playerRealm} onChange={this.handleInput} />
 					</Control>
 					<Control>
-						<Button isColor="info">Go</Button>
+						<Button 
+							isColor="info" 
+							className={this.state.animateArrow} 
+							onMouseEnter={this.mouseOverGoButton}
+							onMouseLeave={this.mouseLeaveGoButton}>
+						Go&nbsp;<i className="fas fa-angle-double-right"></i></Button>
 					</Control>
 				</Field>
 			</Box>
@@ -147,10 +170,10 @@ export default class App extends Component {
 						<Label>Difficulty</Label>
 						<Control>
 							<Select name="difficulty" value={this.state.difficulty} onChange={this.handleInput}>
-							<option value="lfr">LFR</option>
-							<option value="normal">Normal</option>
-							<option value="heroic">Heroic</option>
-							<option value="mythic">Mythic</option>
+								<option value="lfr">LFR</option>
+								<option value="normal">Normal</option>
+								<option value="heroic">Heroic</option>
+								<option value="mythic">Mythic</option>
 							</Select>
 						</Control>
 					</Field>
