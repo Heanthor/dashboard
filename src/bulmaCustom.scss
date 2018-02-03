@@ -1,0 +1,6 @@
+@import 'bulma/sass/utilities/initial-variables.sass';
+
+$newRed: #EF476F;
+$newRedInvert: findColorInvert($newRed);
+
+@import 'bulma/bulma.sass';

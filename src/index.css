@@ -1,5 +1,9 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+.animate svg {
+  transition: 1s;
+  transform: translateX(7px);
+}
+
+.animate-rev svg {
+  transition: 1s;
+  transform: translateX(0px);
 }

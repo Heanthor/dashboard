@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Columns, Column, Section, Title, Label, Control, Select, Notification, Field, Button, Box } from 'bloomer';
-import 'bulma/css/bulma.css';
-import './mystyles.css';
 import { Container } from 'bloomer/lib/layout/Container';
 import { Subtitle } from 'bloomer/lib/elements/Subtitle';
 import { Input } from 'bloomer/lib/elements/Form/Input';
@@ -139,16 +137,16 @@ export default class App extends Component {
 						</Select>
 					</Control>
 					<Control>
-						<Button isColor="primary" onClick={() => this.setState({ simType: "guild" })}>Guild Sim</Button>
+						<Button isColor={this.state.simType === "guild" ? "primary" : "info"} onClick={() => this.setState({ simType: "guild" })}>Guild Sim</Button>
 					</Control>
 					<Control>
-						<Button isColor="primary" onClick={() => this.setState({ simType: "player" })}>Player Sim</Button>
+						<Button isColor={this.state.simType === "player" ? "primary" : "info"} onClick={() => this.setState({ simType: "player" })}>Player Sim</Button>
 					</Control>
 				</Field>
-
-				{this.renderGuildSimForm()}
-				{this.renderPlayerSimForm()}
-
+				<Column isSize="1/2">
+					{this.renderGuildSimForm()}
+					{this.renderPlayerSimForm()}
+				</Column>
 				</Column>
 
 				<Column>
