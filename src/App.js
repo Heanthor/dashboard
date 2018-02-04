@@ -11,6 +11,7 @@ export default class App extends Component {
 		super(props);
 
 		this.state = {
+			// DISPLAY state
 			raid: "antorus",
 			simType: null, // player or guild
 
@@ -23,22 +24,15 @@ export default class App extends Component {
 			guildName: "",
 			guildRealm: "",
 
-			animateArrow: ""
+			// ANIMATION state
+			animateArrow: "",
+			loadingStatus: "test"
+
 		};
 
 		this.handleInput = this.handleInput.bind(this);
 		this.mouseOverGoButton = this.mouseOverGoButton.bind(this);
 		this.mouseLeaveGoButton = this.mouseLeaveGoButton.bind(this);
-	}
-
-	onRaidSwitch(raid) {
-		let colorChoice = "";
-		switch(raid) {
-			case "nightmare":
-			case "nighthold":
-			case "tos":
-			case "antorus":
-		}
 	}
 
 	handleInput(event) {
@@ -112,21 +106,49 @@ export default class App extends Component {
 		) : null;
 	}
 
-	render() {
-		return (
-			<Section>
-			<Columns>
-			<Column isSize="3/4">
-				<Title>
-					Heanthor's Simcraft Runner
-				</Title>
-				<Subtitle>
-					Run sims on an <strong>entire guild</strong>, or a <strong>single player</strong>.<br/>
-					Get meaningful results for <strong>all Legion raids</strong>.
-				</Subtitle>
+	renderOptionsPane() {
+		return ( this.state.loadingStatus != null ? null :
+		<Notification> {/* color change here */}
+		<Field>
+			<Label>Region</Label>
+			<Control>
+				<Select name="region" value={this.state.region} onChange={this.handleInput}>
+					<option value="US">US</option>
+					<option value="EU">EU</option>
+					<option value="CN">CN</option>
+					<option value="TW">TW</option>
+					<option value="KR">KR</option>
+				</Select>
+			</Control>
+		</Field>
 
+		<Field>
+			<Label>Difficulty</Label>
+			<Control>
+				<Select name="difficulty" value={this.state.difficulty} onChange={this.handleInput}>
+					<option value="lfr">LFR</option>
+					<option value="normal">Normal</option>
+					<option value="heroic">Heroic</option>
+					<option value="mythic">Mythic</option>
+				</Select>
+			</Control>
+		</Field>
 
-				<Subtitle isSize={5}>Select a raid and sim type...</Subtitle>
+		<Field>
+			<Control>
+				<Label>Weeks to Scan</Label>
+				<Input type="number" name="weeksToScan" value={this.state.weeksToScan} onChange={this.handleInput} />
+			</Control>
+		</Field>
+		
+		</Notification>
+		);
+	}
+
+	renderMainForm() {
+		return (this.state.loadingStatus != null ? null :
+			<div>
+			<Subtitle isSize={5}>Select a raid and sim type...</Subtitle>
 				<Field isGrouped={true}>
 					<Control>
 						<Select name="raid" defaultValue="antorus" onChange={this.handleInput}>
@@ -143,49 +165,44 @@ export default class App extends Component {
 						<Button isColor={this.state.simType === "player" ? "primary" : "info"} onClick={() => this.setState({ simType: "player" })}>Player Sim</Button>
 					</Control>
 				</Field>
-				<Column isSize="1/2">
-					{this.renderGuildSimForm()}
-					{this.renderPlayerSimForm()}
-				</Column>
+			</div>
+		);
+	}
+
+	renderSpinner() {
+		return ( this.state.loadingStatus == null ? null :
+			<Container className="spinner has-text-centered">
+				<i className="fas fa-spinner"></i>
+			</Container>
+		);
+	}
+
+	render() {
+		return (
+			<Section>
+			<Container className="main-container">
+			<Columns>
+			<Column isSize="3/4">
+				<Title>
+					Heanthor's Simcraft Runner
+				</Title>
+				<Subtitle>
+					Run sims on an <strong>entire guild</strong>, or a <strong>single player</strong>.<br/>
+					Get meaningful results for <strong>all Legion raids</strong>.
+				</Subtitle>
+
+				{this.renderMainForm()}
+				
+				{this.renderGuildSimForm()}
+				{this.renderPlayerSimForm()}
 				</Column>
 
 				<Column>
-					<Notification isColor="primary"> {/* color change here */}
-					<Field>
-						<Label>Region</Label>
-						<Control>
-							<Select name="region" value={this.state.region} onChange={this.handleInput}>
-								<option value="US">US</option>
-								<option value="EU">EU</option>
-								<option value="CN">CN</option>
-								<option value="TW">TW</option>
-								<option value="KR">KR</option>
-							</Select>
-						</Control>
-					</Field>
-
-					<Field>
-						<Label>Difficulty</Label>
-						<Control>
-							<Select name="difficulty" value={this.state.difficulty} onChange={this.handleInput}>
-								<option value="lfr">LFR</option>
-								<option value="normal">Normal</option>
-								<option value="heroic">Heroic</option>
-								<option value="mythic">Mythic</option>
-							</Select>
-						</Control>
-					</Field>
-
-					<Field>
-						<Control>
-							<Label>Weeks to Scan</Label>
-							<Input type="number" name="weeksToScan" value={this.state.weeksToScan} onChange={this.handleInput} />
-						</Control>
-					</Field>
-					
-					</Notification>
+					{this.renderOptionsPane()}
 				</Column>
 			</Columns>
+				{this.renderSpinner()}
+			</Container>
 		  </Section>
 		);
 	}

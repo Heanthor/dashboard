@@ -1,6 +1,19 @@
 @import 'bulma/sass/utilities/initial-variables.sass';
 
-$newRed: #EF476F;
-$newRedInvert: findColorInvert($newRed);
+$nighthold: #432f75;
+$nighthold-invert: #bca6f2;
+$antorus: #2b803e;
+$antorus-invert: #69cb7f;
+$nightmare: #a43741;
+$nightmare-invert: #f8808c;
+$tos: #236267;
+$tos-invert: #9da8a9;
+
+$colors: (
+    nighthold: ($nighthold, $nighthold-invert),
+    antorus: ($antorus, $antorus-invert),
+    nightmare: ($nightmare, $nightmare-invert),
+    tos: ($tos, $tos-invert)
+);
 
 @import 'bulma/bulma.sass';
