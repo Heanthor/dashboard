@@ -26,13 +26,22 @@ export default class App extends Component {
 
 			// ANIMATION state
 			animateArrow: "",
-			loadingStatus: "test"
+			loadingStatus: null
 
 		};
 
 		this.handleInput = this.handleInput.bind(this);
 		this.mouseOverGoButton = this.mouseOverGoButton.bind(this);
 		this.mouseLeaveGoButton = this.mouseLeaveGoButton.bind(this);
+		this.getShowHideClass = this.getShowHideClass.bind(this);
+	}
+
+	/**
+	 * Get show/hide class for initial forms
+	 * @param {string} loadingStatus 
+	 */
+	getShowHideClass(loadingStatus) {
+		return loadingStatus == "loading" ? "hide" : "show";
 	}
 
 	handleInput(event) {
@@ -107,8 +116,8 @@ export default class App extends Component {
 	}
 
 	renderOptionsPane() {
-		return ( this.state.loadingStatus != null ? null :
-		<Notification> {/* color change here */}
+		return (
+		<Notification className={`transitionable ${this.getShowHideClass(this.state.loadingStatus)}`}> {/* color change here */}
 		<Field>
 			<Label>Region</Label>
 			<Control>
@@ -146,8 +155,8 @@ export default class App extends Component {
 	}
 
 	renderMainForm() {
-		return (this.state.loadingStatus != null ? null :
-			<div>
+		return (
+			<div className={`transitionable ${this.getShowHideClass(this.state.loadingStatus)}`}>
 			<Subtitle isSize={5}>Select a raid and sim type...</Subtitle>
 				<Field isGrouped={true}>
 					<Control>
@@ -170,8 +179,8 @@ export default class App extends Component {
 	}
 
 	renderSpinner() {
-		return ( this.state.loadingStatus == null ? null :
-			<Container className="spinner has-text-centered">
+		return (
+			<Container className={`spinner has-text-centered transitionable ${this.state.loadingStatus === "loading" ? "show" : "hide"}`}>
 				<i className="fas fa-spinner"></i>
 			</Container>
 		);

@@ -18,4 +18,24 @@ html {
 
 .spinner {
   font-size: 8em;
+  animation: spinner-spin infinite 2s linear;
+}
+
+@keyframes spinner-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.transitionable {
+  transition: 0.5s;
+}
+
+.transitionable.show {
+  opacity: 1;
+  visibility: visible; 
+}
+
+.transitionable.hide {
+  opacity: 0;
+  visibility: hidden;
 }
