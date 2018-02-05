@@ -39,3 +39,7 @@ html {
   opacity: 0;
   visibility: hidden;
 }
+
+.guild-box {
+  margin-top: 0.5em;
+}

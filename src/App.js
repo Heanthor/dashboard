@@ -34,6 +34,7 @@ export default class App extends Component {
 		this.mouseOverGoButton = this.mouseOverGoButton.bind(this);
 		this.mouseLeaveGoButton = this.mouseLeaveGoButton.bind(this);
 		this.getShowHideClass = this.getShowHideClass.bind(this);
+		this.onGoClick = this.onGoClick.bind(this);
 	}
 
 	/**
@@ -41,7 +42,7 @@ export default class App extends Component {
 	 * @param {string} loadingStatus 
 	 */
 	getShowHideClass(loadingStatus) {
-		return loadingStatus == "loading" ? "hide" : "show";
+		return loadingStatus === "loading" ? "hide" : "show";
 	}
 
 	handleInput(event) {
@@ -58,10 +59,17 @@ export default class App extends Component {
 		this.setState({ animateArrow: "animate-rev" });
 	}
 
+	onGoClick() {
+		this.setState({
+			simType: null,
+			loadingStatus: "loading"
+		});
+	}
+
 	// RENDER FUNCTIONS
 	renderGuildSimForm() {
 		return this.state.simType === "guild" ? (
-			<Box>
+			<Box className="guild-box">
 				<Label>Guild</Label>
 				<Field>
 					<Control>
@@ -79,7 +87,8 @@ export default class App extends Component {
 							isColor="info" 
 							className={this.state.animateArrow} 
 							onMouseEnter={this.mouseOverGoButton}
-							onMouseLeave={this.mouseLeaveGoButton}>
+							onMouseLeave={this.mouseLeaveGoButton}
+							onClick={this.onGoClick}>
 						Go&nbsp;<i className="fas fa-angle-double-right"></i></Button>
 					</Control>
 				</Field>
@@ -89,7 +98,7 @@ export default class App extends Component {
 
 	renderPlayerSimForm() {
 		return this.state.simType === "player" ? (
-			<Box>
+			<Box className="guild-box">
 				<Label>Name</Label>
 				<Field>
 					<Control>
@@ -107,7 +116,8 @@ export default class App extends Component {
 							isColor="info" 
 							className={this.state.animateArrow} 
 							onMouseEnter={this.mouseOverGoButton}
-							onMouseLeave={this.mouseLeaveGoButton}>
+							onMouseLeave={this.mouseLeaveGoButton}
+							onClick={this.onGoClick}>
 						Go&nbsp;<i className="fas fa-angle-double-right"></i></Button>
 					</Control>
 				</Field>
