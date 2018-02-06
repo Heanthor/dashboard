@@ -21,6 +21,10 @@ html {
   animation: spinner-spin infinite 2s linear;
 }
 
+.container.spinner {
+  max-width: 100px;
+}
+
 @keyframes spinner-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
