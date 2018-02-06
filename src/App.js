@@ -26,7 +26,7 @@ export default class App extends Component {
 
 			// ANIMATION state
 			animateArrow: "",
-			loadingStatus: "loading"
+			loadingStatus: null
 
 		};
 
@@ -35,6 +35,7 @@ export default class App extends Component {
 		this.mouseLeaveGoButton = this.mouseLeaveGoButton.bind(this);
 		this.getShowHideClass = this.getShowHideClass.bind(this);
 		this.onGoClick = this.onGoClick.bind(this);
+		this.onCancelClick = this.onCancelClick.bind(this);
 	}
 
 	/**
@@ -63,6 +64,13 @@ export default class App extends Component {
 		this.setState({
 			simType: null,
 			loadingStatus: "loading"
+		});
+	}
+
+	onCancelClick() {
+		// wait for api response before cancelling
+		this.setState({
+			loadingStatus: null
 		});
 	}
 
@@ -190,9 +198,11 @@ export default class App extends Component {
 
 	renderSpinner() {
 		return (
-			<Container className={`has-text-centered transitionable ${this.state.loadingStatus === "loading" ? "show" : "hide"}`}>
+			<Container className={`spinner-container has-text-centered transitionable ${this.state.loadingStatus === "loading" ? "show" : "hide"}`}>
 				<i className="spinner fas fa-spinner"></i>
-				<div><i className="far fa-times-circle cancel-button"></i></div>
+				<div className="back-container" onClick={this.onCancelClick}>
+					<i className="far fa-times-circle cancel-button"></i>
+				</div>
 			</Container>
 		);
 	}

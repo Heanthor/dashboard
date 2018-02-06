@@ -21,8 +21,13 @@ html {
   animation: spinner-spin infinite 2s linear;
 }
 
-.container.spinner {
-  max-width: 100px;
+.spinner-container {
+  max-width: 200px;
+}
+
+.back-container:hover {
+  color: rgb(75, 25, 133);
+  cursor: pointer;
 }
 
 @keyframes spinner-spin {
