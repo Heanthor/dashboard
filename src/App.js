@@ -26,7 +26,7 @@ export default class App extends Component {
 
 			// ANIMATION state
 			animateArrow: "",
-			loadingStatus: null
+			loadingStatus: "loading"
 
 		};
 
@@ -190,8 +190,9 @@ export default class App extends Component {
 
 	renderSpinner() {
 		return (
-			<Container className={`spinner has-text-centered transitionable ${this.state.loadingStatus === "loading" ? "show" : "hide"}`}>
-				<i className="fas fa-spinner"></i>
+			<Container className={`has-text-centered transitionable ${this.state.loadingStatus === "loading" ? "show" : "hide"}`}>
+				<i className="spinner fas fa-spinner"></i>
+				<div><i className="far fa-times-circle cancel-button"></i></div>
 			</Container>
 		);
 	}

@@ -44,6 +44,11 @@ html {
   visibility: hidden;
 }
 
+.cancel-button {
+  margin-top: 0.5em;
+  font-size: 2em;
+}
+
 .guild-box {
   margin-top: 0.5em;
 }
