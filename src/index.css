@@ -39,3 +39,8 @@ html {
   opacity: 0;
   visibility: hidden;
 }
+
+.cancel-button {
+  margin-top: 0.5em;
+  font-size: 2em;
+}
