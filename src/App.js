@@ -209,7 +209,7 @@ export default class App extends Component {
 
 	render() {
 		return (
-			<Section>
+			<Section className={`bg-${this.state.raid}`}>
 			<Container className="main-container">
 			<Columns>
 			<Column isSize="3/4">

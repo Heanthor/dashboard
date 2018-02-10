@@ -1,5 +1,28 @@
-html {
-  background: #ccc;
+/* TODO 
+  Make page stop scrolling vertically
+  Mobile friendly
+*/
+
+.section.bg-nightmare {
+  background-color: #a43741;
+}
+
+.section.bg-nighthold {
+  background-color: #3e1e80;
+}
+
+.section.bg-tos {
+  background-color: #236267;
+}
+
+.section.bg-antorus {
+  background-color: #2b803e;
+}
+
+.section {
+  background-image: linear-gradient(to right, rgba(0,0,0,0) 10%,rgba(0,0,0,1) 50%,rgba(0,0,0,0) 90%);
+  padding-top: 0px;
+  transition: background 0.5s;
 }
 
 .animate svg {
@@ -13,7 +36,11 @@ html {
 }
 
 .main-container {
-  max-width: 850px;
+  width: 60vw;
+  max-width: 1250px;
+  height: 100vh;
+  background: #ccc;
+  padding: 75px 75px 0px 75px;
 }
 
 .spinner {
@@ -57,3 +84,4 @@ html {
 .guild-box {
   margin-top: 0.5em;
 }
+
