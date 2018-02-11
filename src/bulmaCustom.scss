@@ -9,11 +9,21 @@ $nightmare-invert: #f8808c;
 $tos: #236267;
 $tos-invert: #9da8a9;
 
+$info: #888888;
+$primary: #444444;
+
 $colors: (
     nighthold: ($nighthold, $nighthold-invert),
     antorus: ($antorus, $antorus-invert),
     nightmare: ($nightmare, $nightmare-invert),
-    tos: ($tos, $tos-invert)
+    tos: ($tos, $tos-invert),
+    info: ($info, $white),
+    primary: ($primary, $white)
 );
+
+$tablet: 969px;
+$desktop: 1160px + (2 * $gap);
+$widescreen: 1352px + (2 * $gap);
+$fullhd: 1544px + (2 * $gap);
 
 @import 'bulma/bulma.sass';

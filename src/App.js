@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Columns, Column, Section, Title, Label, Control, Select, Notification, Field, Button, Box } from 'bloomer';
+import { Columns, Column, Section, Title, Label, Control, Select, Notification, Field, Button, Box, Delete } from 'bloomer';
 import { Container } from 'bloomer/lib/layout/Container';
 import { Subtitle } from 'bloomer/lib/elements/Subtitle';
 import { Input } from 'bloomer/lib/elements/Form/Input';
+
+import Spinner from './components/spinner';
 
 // @flow
 export default class App extends Component {
@@ -26,8 +28,12 @@ export default class App extends Component {
 
 			// ANIMATION state
 			animateArrow: "",
-			loadingStatus: null
+			loadingStatus: "loading",
 
+			// ERROR state
+			validationError: false,
+			serverError: false,
+			errorMessage: ""
 		};
 
 		this.handleInput = this.handleInput.bind(this);
@@ -36,6 +42,8 @@ export default class App extends Component {
 		this.getShowHideClass = this.getShowHideClass.bind(this);
 		this.onGoClick = this.onGoClick.bind(this);
 		this.onCancelClick = this.onCancelClick.bind(this);
+		this.renderValidationErrorNotification = this.renderValidationErrorNotification.bind(this);
+		this.renderServerErrorNotification = this.renderServerErrorNotification.bind(this);
 	}
 
 	/**
@@ -61,10 +69,22 @@ export default class App extends Component {
 	}
 
 	onGoClick() {
-		this.setState({
-			simType: null,
-			loadingStatus: "loading"
-		});
+		const guildName = this.state.guildName;
+		const guildRealm = this.state.guildRealm;
+
+		if (guildName.length < 1 || guildRealm.length < 1) {
+			this.setState({
+				 validationError: true,
+				 errorMessage: "Guild or realm name cannot be blank."
+			});
+		} else {
+			this.setState({
+				simType: null,
+				loadingStatus: "loading",
+				animateArrow: "animate-rev",
+				validationError: false
+			});
+		}
 	}
 
 	onCancelClick() {
@@ -75,9 +95,12 @@ export default class App extends Component {
 	}
 
 	// RENDER FUNCTIONS
+
 	renderGuildSimForm() {
 		return this.state.simType === "guild" ? (
 			<Box className="guild-box">
+				{this.renderValidationErrorNotification()}
+
 				<Label>Guild</Label>
 				<Field>
 					<Control>
@@ -107,6 +130,8 @@ export default class App extends Component {
 	renderPlayerSimForm() {
 		return this.state.simType === "player" ? (
 			<Box className="guild-box">
+				{this.renderValidationErrorNotification()}
+
 				<Label>Name</Label>
 				<Field>
 					<Control>
@@ -135,7 +160,7 @@ export default class App extends Component {
 
 	renderOptionsPane() {
 		return (
-		<Notification className={`transitionable ${this.getShowHideClass(this.state.loadingStatus)}`}> {/* color change here */}
+		<Notification className={`transitionable notification-pane ${this.getShowHideClass(this.state.loadingStatus)}`}>
 		<Field>
 			<Label>Region</Label>
 			<Control>
@@ -152,7 +177,7 @@ export default class App extends Component {
 		<Field>
 			<Label>Difficulty</Label>
 			<Control>
-				<Select name="difficulty" value={this.state.difficulty} onChange={this.handleInput}>
+				<Select name="difficulty" value={this.state.difficulty} onChange={this.handleInput} >
 					<option value="lfr">LFR</option>
 					<option value="normal">Normal</option>
 					<option value="heroic">Heroic</option>
@@ -164,7 +189,7 @@ export default class App extends Component {
 		<Field>
 			<Control>
 				<Label>Weeks to Scan</Label>
-				<Input type="number" name="weeksToScan" value={this.state.weeksToScan} onChange={this.handleInput} />
+				<Input type="number" name="weeksToScan" value={this.state.weeksToScan} onChange={this.handleInput} min="1"/>
 			</Control>
 		</Field>
 		
@@ -199,7 +224,8 @@ export default class App extends Component {
 	renderSpinner() {
 		return (
 			<Container className={`spinner-container has-text-centered transitionable ${this.state.loadingStatus === "loading" ? "show" : "hide"}`}>
-				<i className="spinner fas fa-spinner"></i>
+				{/* <i className="spinner fas fa-spinner"></i> */}
+				<Spinner percentComplete={0} />
 				<div className="back-container" onClick={this.onCancelClick}>
 					<i className="far fa-times-circle cancel-button"></i>
 				</div>
@@ -207,11 +233,45 @@ export default class App extends Component {
 		);
 	}
 
+	renderValidationErrorNotification() {
+		return this.state.validationError ? (
+			<Notification isColor="danger">
+				<Delete onClick={() => this.setState({ validationError: false })} />
+				{this.state.errorMessage}
+			</Notification>
+		) : null;
+	}
+
+	renderServerErrorNotification() {
+		return this.state.serverError ? (
+			<Notification isColor="danger">
+				<Delete onClick={() => this.setState({ serverError: false })} />
+				{this.state.errorMessage}
+			</Notification>
+		) : null;
+	}
+
+	renderProgressTextBox() {
+		return (
+			<div className={`progress-container transitionable has-text-centered ${this.state.loadingStatus === "loading" ? "show" : "hide"}`}>
+				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
+				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
+				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
+				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
+				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
+				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
+				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
+				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
+				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
+			</div>
+		);
+	}
+
 	render() {
 		return (
 			<Section className={`bg-${this.state.raid}`}>
 			<Container className="main-container">
-			<Columns>
+			<Columns className="columns-short">
 			<Column isSize="3/4">
 				<Title>
 					Heanthor's Simcraft Runner
@@ -220,7 +280,7 @@ export default class App extends Component {
 					Run sims on an <strong>entire guild</strong>, or a <strong>single player</strong>.<br/>
 					Get meaningful results for <strong>all Legion raids</strong>.
 				</Subtitle>
-
+				{this.renderServerErrorNotification()}
 				{this.renderMainForm()}
 				
 				{this.renderGuildSimForm()}
@@ -232,6 +292,7 @@ export default class App extends Component {
 				</Column>
 			</Columns>
 				{this.renderSpinner()}
+				{this.renderProgressTextBox()}
 			</Container>
 		  </Section>
 		);
