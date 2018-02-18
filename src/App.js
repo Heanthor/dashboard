@@ -225,7 +225,7 @@ export default class App extends Component {
 		return (
 			<Container className={`spinner-container has-text-centered transitionable ${this.state.loadingStatus === "loading" ? "show" : "hide"}`}>
 				{/* <i className="spinner fas fa-spinner"></i> */}
-				<Spinner percentComplete={0} />
+				<Spinner percentComplete={0} highlightClass={this.state.raid}/>
 				<div className="back-container" onClick={this.onCancelClick}>
 					<i className="far fa-times-circle cancel-button"></i>
 				</div>

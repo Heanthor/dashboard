@@ -6,13 +6,12 @@
     "bulma": "^0.6.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-15": "^1.0.5",
-    "enzyme-adapter-react-16": "^1.1.1",
     "flow-bin": "^0.55.0",
     "node-sass-chokidar": "0.0.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.10",
-    "react-test-renderer": "^16.2.0"
+    "react-test-renderer": "^15.6.1"
   },
   "scripts": {
     "start": "react-scripts start",

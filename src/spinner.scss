@@ -39,19 +39,34 @@
 
 
 /* Spinner CSS */
-
 .circle {
     display: block;
-    background: black;
     border-radius: 50%;
     height: 20px;
     width: 20px;
     margin: 0;
     position: absolute;
 
-    &.filled {
-        background: blue;
+    &.nightmare {
+        background-color: #a43741;
     }
+      
+    &.nighthold {
+        background-color: #3e1e80;
+    }
+    
+    &.tos {
+        background-color: #236267;
+    }
+    
+    &.antorus {
+        background-color: #2b803e;
+    }
+}
+
+.opacity-container {
+    background: black;
+    z-index: 5;
 }
 
 .spinner-component-container {

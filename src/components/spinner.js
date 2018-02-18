@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 
-
 export default class Spinner extends Component {
     constructor(props) {
         super(props);
@@ -14,9 +13,14 @@ export default class Spinner extends Component {
         const numFilled = this.props.numCircles * (this.props.percentComplete / 100);
 
         for (let i = 0; i < this.props.numCircles; i++) {
-            const filledString = i < numFilled ? "filled" : null;
+            const opacityValue = (i + 1) - (this.props.percentComplete / (100 / this.props.numCircles))
 
-            circles.push(<div className={`circle ${filledString}`} key={i}></div>);
+            circles.push(
+                <div key={i} className="circle-container">
+                    <div style={{opacity: opacityValue}} className={`circle opacity-container`}></div>
+                    <div className={`circle ${this.props.highlightClass}`}></div>
+                </div>
+            );
         }
 
         return circles;
@@ -24,16 +28,17 @@ export default class Spinner extends Component {
 
     render() {
         return (
-        <div className="spinner-component-container">
-            {this.renderCircles()}
-        </div>
+            <div className="spinner-component-container">
+                {this.renderCircles()}
+            </div>
         );
     }
 }
 
 Spinner.propTypes = {
     numCircles: PropTypes.number,
-    percentComplete: PropTypes.number.isRequired
+    percentComplete: PropTypes.number.isRequired,
+    highlightClass: PropTypes.string.isRequired
 };
 
 Spinner.defaultProps = {
