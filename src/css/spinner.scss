@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 /// Mixin to place items on a circle
 /// @author Hugo Giraudel
 /// @author Ana Tudor
@@ -37,8 +39,6 @@
     }
 }
 
-
-/* Spinner CSS */
 .circle {
     display: block;
     border-radius: 50%;
@@ -46,22 +46,6 @@
     width: 20px;
     margin: 0;
     position: absolute;
-
-    &.nightmare {
-        background-color: #a43741;
-    }
-      
-    &.nighthold {
-        background-color: #3e1e80;
-    }
-    
-    &.tos {
-        background-color: #236267;
-    }
-    
-    &.antorus {
-        background-color: #2b803e;
-    }
 }
 
 .opacity-container {

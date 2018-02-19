@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'bulma/css/bulma.css';
-import './bulmaCustom.css';
-import './index.css';
-import './spinner.css';
+import './css/bulmaCustom.css';
+import './css/spinner.css';
+import './css/index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 

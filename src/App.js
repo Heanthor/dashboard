@@ -5,6 +5,7 @@ import { Subtitle } from 'bloomer/lib/elements/Subtitle';
 import { Input } from 'bloomer/lib/elements/Form/Input';
 
 import Spinner from './components/spinner';
+import BackButton from './components/backButton';
 
 // @flow
 export default class App extends Component {
@@ -224,11 +225,8 @@ export default class App extends Component {
 	renderSpinner() {
 		return (
 			<Container className={`spinner-container has-text-centered transitionable ${this.state.loadingStatus === "loading" ? "show" : "hide"}`}>
-				{/* <i className="spinner fas fa-spinner"></i> */}
-				<Spinner percentComplete={0} highlightClass={this.state.raid}/>
-				<div className="back-container" onClick={this.onCancelClick}>
-					<i className="far fa-times-circle cancel-button"></i>
-				</div>
+				<Spinner percentComplete={0} highlightClass={this.state.raid} />
+				<BackButton onClick={this.onCancelClick} hoverClass={this.state.raid} />
 			</Container>
 		);
 	}
@@ -267,9 +265,19 @@ export default class App extends Component {
 		);
 	}
 
+	renderFooter() {
+		return (
+			<div className="footer-div has-text-centered">
+			<a href="https://bulma.io">
+				<img src="https://bulma.io/images/made-with-bulma--semiblack.png" alt="Made with Bulma" width="128" height="24" />
+			</a>
+			</div>
+		);
+	}
+
 	render() {
 		return (
-			<Section className={`bg-${this.state.raid}`}>
+			<Section className={`bg-raid-color ${this.state.raid}`}>
 			<Container className="main-container">
 			<Columns className="columns-short">
 			<Column isSize="3/4">
@@ -291,8 +299,12 @@ export default class App extends Component {
 					{this.renderOptionsPane()}
 				</Column>
 			</Columns>
+			<Columns>
 				{this.renderSpinner()}
+			</Columns>
 				{this.renderProgressTextBox()}
+			
+				{this.renderFooter()}
 			</Container>
 		  </Section>
 		);

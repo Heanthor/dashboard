@@ -1,22 +1,48 @@
-.section.bg-nightmare {
-  background-color: #a43741;
+@import 'variables.scss';
+
+// Raid color switcher classes
+.bg-raid-color {
+  &.nightmare {
+      background-color: $nightmare;
+  }
+    
+  &.nighthold {
+      background-color: $nighthold;
+  }
+  
+  &.tos {
+      background-color: $tos;
+  }
+  
+  &.antorus {
+      background-color: $antorus;
+  }
 }
 
-.section.bg-nighthold {
-  background-color: #3e1e80;
+.raid-color {
+  &.nightmare {
+      color: $nightmare;
+  }
+    
+  &.nighthold {
+      color: $nighthold;
+  }
+  
+  &.tos {
+      color: $tos;
+  }
+  
+  &.antorus {
+      color: $antorus;
+  }
 }
 
-.section.bg-tos {
-  background-color: #236267;
-}
-
-.section.bg-antorus {
-  background-color: #2b803e;
-}
+// General classes
 
 .section {
   background-image: linear-gradient(to right, rgba(0,0,0,0) 10%,rgba(0,0,0,1) 50%,rgba(0,0,0,0) 90%);
   padding-top: 0px;
+  padding-bottom: 0px;
   transition: background 0.5s;
 }
 
@@ -32,7 +58,7 @@
 
 .main-container {
   width: 60vw;
-  max-width: 1250px;
+  max-width: 1000px;
   height: 100vh;
   background: #ccc;
   padding: 75px 75px 0px 75px;
@@ -48,11 +74,10 @@
 
 .back-container {
   margin-top: 10px;
-}
 
-.back-container:hover {
-  color: rgb(75, 25, 133);
-  cursor: pointer;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 @keyframes spinner-spin {
@@ -62,16 +87,16 @@
 
 .transitionable {
   transition: 0.5s;
-}
 
-.transitionable.show {
-  opacity: 1;
-  visibility: visible; 
-}
+  &.show {
+    opacity: 1;
+    visibility: visible; 
+  }
 
-.transitionable.hide {
-  opacity: 0;
-  visibility: hidden;
+  &.hide {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .cancel-button {
@@ -93,27 +118,24 @@
   position: relative;
   overflow: hidden;
   margin-top: 5em;
-}
 
-.progress-container:before {
-  content: '';
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  background: linear-gradient(transparent 150px, #ccc);
+  &:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: linear-gradient(transparent 150px, #ccc);
+  }
 }
 
 .columns-short {
   height: 200px;
 }
 
-.circle {
-  display: block;
-  background: black;
-  border-radius: 50%;
-  height: 20px;
-  width: 20px;
-  margin: 0;
+.footer-div {
+  position: fixed;
+  bottom: 0;
+  left: calc(50vw - 64px);
 }

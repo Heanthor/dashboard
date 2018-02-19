@@ -10,7 +10,6 @@ export default class Spinner extends Component {
 
     renderCircles() {
         const circles = [];
-        const numFilled = this.props.numCircles * (this.props.percentComplete / 100);
 
         for (let i = 0; i < this.props.numCircles; i++) {
             const opacityValue = (i + 1) - (this.props.percentComplete / (100 / this.props.numCircles))
@@ -18,7 +17,7 @@ export default class Spinner extends Component {
             circles.push(
                 <div key={i} className="circle-container">
                     <div style={{opacity: opacityValue}} className={`circle opacity-container`}></div>
-                    <div className={`circle ${this.props.highlightClass}`}></div>
+                    <div className={`circle bg-raid-color ${this.props.highlightClass}`}></div>
                 </div>
             );
         }

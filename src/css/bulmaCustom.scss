@@ -1,18 +1,8 @@
 @import 'bulma/sass/utilities/initial-variables.sass';
+@import "bulma/sass/utilities/functions";
+@import 'variables.scss';
 
-$nighthold: #3e1e80;
-$nighthold-invert: #bca6f2;
-$antorus: #2b803e;
-$antorus-invert: #69cb7f;
-$nightmare: #a43741;
-$nightmare-invert: #f8808c;
-$tos: #236267;
-$tos-invert: #9da8a9;
-
-$info: #888888;
-$primary: #444444;
-
-$colors: (
+$newColors: (
     nighthold: ($nighthold, $nighthold-invert),
     antorus: ($antorus, $antorus-invert),
     nightmare: ($nightmare, $nightmare-invert),
@@ -21,9 +11,19 @@ $colors: (
     primary: ($primary, $white)
 );
 
+@import "bulma/sass/utilities/derived-variables.sass";
+
+$colors: map-merge($colors, $newColors);
+
 $tablet: 969px;
 $desktop: 1160px + (2 * $gap);
 $widescreen: 1352px + (2 * $gap);
 $fullhd: 1544px + (2 * $gap);
 
 @import 'bulma/bulma.sass';
+
+// strange issue with em vs rem
+.notification > .delete {
+    right: 0.5rem;
+    top: 0.5rem;
+}
