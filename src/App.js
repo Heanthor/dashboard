@@ -6,6 +6,7 @@ import { Input } from 'bloomer/lib/elements/Form/Input';
 
 import Spinner from './components/spinner';
 import BackButton from './components/backButton';
+import SimResults from './components/simResults';
 
 // @flow
 export default class App extends Component {
@@ -14,7 +15,7 @@ export default class App extends Component {
 		super(props);
 
 		this.state = {
-			// DISPLAY state
+			// FORM state
 			raid: "antorus",
 			simType: null, // player or guild
 
@@ -29,6 +30,9 @@ export default class App extends Component {
 
 			// ANIMATION state
 			animateArrow: "",
+
+			// SIM PROGRESS state
+			progress: 0,
 			loadingStatus: "loading",
 
 			// ERROR state
@@ -40,18 +44,19 @@ export default class App extends Component {
 		this.handleInput = this.handleInput.bind(this);
 		this.mouseOverGoButton = this.mouseOverGoButton.bind(this);
 		this.mouseLeaveGoButton = this.mouseLeaveGoButton.bind(this);
-		this.getShowHideClass = this.getShowHideClass.bind(this);
+		this.getFormShowHideClass = this.getFormShowHideClass.bind(this);
 		this.onGoClick = this.onGoClick.bind(this);
 		this.onCancelClick = this.onCancelClick.bind(this);
 		this.renderValidationErrorNotification = this.renderValidationErrorNotification.bind(this);
 		this.renderServerErrorNotification = this.renderServerErrorNotification.bind(this);
+		this.renderResults = this.renderResults.bind(this);
 	}
 
 	/**
 	 * Get show/hide class for initial forms
 	 * @param {string} loadingStatus 
 	 */
-	getShowHideClass(loadingStatus) {
+	getFormShowHideClass(loadingStatus) {
 		return loadingStatus === "loading" ? "hide" : "show";
 	}
 
@@ -161,7 +166,7 @@ export default class App extends Component {
 
 	renderOptionsPane() {
 		return (
-		<Notification className={`transitionable notification-pane ${this.getShowHideClass(this.state.loadingStatus)}`}>
+		<Notification className={`transitionable notification-pane ${this.getFormShowHideClass(this.state.loadingStatus)}`}>
 		<Field>
 			<Label>Region</Label>
 			<Control>
@@ -200,7 +205,7 @@ export default class App extends Component {
 
 	renderMainForm() {
 		return (
-			<div className={`transitionable ${this.getShowHideClass(this.state.loadingStatus)}`}>
+			<div className={`transitionable ${this.getFormShowHideClass(this.state.loadingStatus)}`}>
 			<Subtitle isSize={5}>Select a raid and sim type...</Subtitle>
 				<Field isGrouped={true}>
 					<Control>
@@ -225,7 +230,7 @@ export default class App extends Component {
 	renderSpinner() {
 		return (
 			<Container className={`spinner-container has-text-centered transitionable ${this.state.loadingStatus === "loading" ? "show" : "hide"}`}>
-				<Spinner percentComplete={0} highlightClass={this.state.raid} />
+				<Spinner percentComplete={this.state.progress} highlightClass={this.state.raid} />
 				<BackButton onClick={this.onCancelClick} hoverClass={this.state.raid} />
 			</Container>
 		);
@@ -251,7 +256,7 @@ export default class App extends Component {
 
 	renderProgressTextBox() {
 		return (
-			<div className={`progress-container transitionable has-text-centered ${this.state.loadingStatus === "loading" ? "show" : "hide"}`}>
+			<div className={`progress-container transitionable has-text-centered ${this.state.loadingStatus === "loading" ? "show" : "hide abs"}`}>
 				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
 				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
 				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
@@ -262,6 +267,12 @@ export default class App extends Component {
 				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
 				<span>Finished player <strong>Heanthor</strong> - Boss <strong>FirstBoss</strong></span><br />
 			</div>
+		);
+	}
+
+	renderResults() {
+		return (
+			<SimResults showClass={this.state.loadingStatus === "complete" ? "show" : "hide"} />
 		);
 	}
 
@@ -303,7 +314,7 @@ export default class App extends Component {
 				{this.renderSpinner()}
 			</Columns>
 				{this.renderProgressTextBox()}
-			
+				{this.renderResults()}
 				{this.renderFooter()}
 			</Container>
 		  </Section>
